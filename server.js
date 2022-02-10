@@ -1,4 +1,4 @@
-const ffmpegPath = require('@ffmpeg-installer/ffmpeg');
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg'); // 自动为当前node服务所在的系统安装ffmpeg
 const ffmpeg = require('fluent-ffmpeg');
 const express = require('express');
 const webSocketStream = require("websocket-stream/stream");
