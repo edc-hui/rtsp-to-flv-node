@@ -19,7 +19,7 @@ function createServer() {
     expressWebSocket(app, null, {
         perMessageDeflate: true
     });
-    app.ws("/rtsp/:id/", rtspToFlvHandle)
+    app.ws("/rtsp/", rtspToFlvHandle)
 
     app.get('/', (req, response) => {
         response.send("当你看到这个页面的时候说明rtsp流媒体服务正常启动中......")
@@ -38,8 +38,8 @@ function rtspToFlvHandle(ws, req) {
         browserBufferTimeout: 1000000
     });
     const url = req.query.url;
-    console.log("rtsp url:", url);
-    console.log("rtsp params:", req.params);
+    const rtspUrl = new Buffer(url, 'base64').toString();
+    console.log("rtsp url:", rtspUrl);
     try {
         ffmpeg(url)
             .addInputOption("-rtsp_transport", "tcp", "-buffer_size", "102400")
