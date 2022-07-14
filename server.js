@@ -38,8 +38,8 @@ function rtspToFlvHandle(ws, req) {
         browserBufferTimeout: 1000000
     });
     const url = req.query.url;
-    const rtspUrl = new Buffer(url, 'base64').toString();
-    console.log("rtsp url:", rtspUrl);
+    // const rtspUrl = new Buffer(url, 'base64').toString();
+    console.log("rtsp url:", url);
     try {
         ffmpeg(url)
             .addInputOption("-rtsp_transport", "tcp", "-buffer_size", "102400")
