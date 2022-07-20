@@ -37,8 +37,8 @@ function rtspToFlvHandle(ws, req) {
     }, {
         browserBufferTimeout: 1000000
     });
-    const url = req.query.url;
-    // const rtspUrl = new Buffer(url, 'base64').toString();
+    // const url = req.query.url;
+    const url = new Buffer(url, 'base64').toString();
     console.log("rtsp url:", url);
     try {
         ffmpeg(url)
@@ -49,8 +49,10 @@ function rtspToFlvHandle(ws, req) {
             .on("codecData", function () {
                 console.log(url, "Stream codecData.")
             })
-            .on("error", function (err) {
+            .on("error", function (err, a, b) {
                 console.log(url, "An error occured: ", err.message);
+                console.log(a)
+                console.log(b)
             })
             .on("end", function () {
                 console.log(url, "Stream end!");
