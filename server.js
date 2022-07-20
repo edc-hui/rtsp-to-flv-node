@@ -1,8 +1,8 @@
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg'); // 自动为当前node服务所在的系统安装ffmpeg
 const ffmpeg = require('fluent-ffmpeg');
 const express = require('express');
-const webSocketStream = require("websocket-stream/stream");
-const expressWebSocket = require("express-ws");
+const webSocketStream = require('websocket-stream/stream');
+const expressWebSocket = require('express-ws');
 
 ffmpeg.setFfmpegPath(ffmpegPath.path);
 
@@ -19,15 +19,15 @@ function createServer() {
     expressWebSocket(app, null, {
         perMessageDeflate: true
     });
-    app.ws("/rtsp/", rtspToFlvHandle)
+    app.ws('/rtsp/', rtspToFlvHandle);
 
     app.get('/', (req, response) => {
-        response.send("当你看到这个页面的时候说明rtsp流媒体服务正常启动中......")
-    })
+        response.send('当你看到这个页面的时候说明rtsp流媒体服务正常启动中......');
+    });
 
     app.listen(8100, () => {
-        console.log("转换rtsp流媒体服务启动了，服务端口号为8100")
-    })
+        console.log('转换rtsp流媒体服务启动了，服务端口号为8100');
+    });
 }
 
 function rtspToFlvHandle(ws, req) {
@@ -39,27 +39,27 @@ function rtspToFlvHandle(ws, req) {
     });
     // const url = req.query.url;
     const url = new Buffer(url, 'base64').toString();
-    console.log("rtsp url:", url);
+    console.log('rtsp url:', url);
     try {
         ffmpeg(url)
-            .addInputOption("-rtsp_transport", "tcp", "-buffer_size", "102400")
+            .addInputOption('-rtsp_transport', 'tcp', '-buffer_size', '102400')
             .on('start', () => {
-                console.log(url, "Stream 开始");
+                console.log(url, '转码 开始');
             })
-            .on("codecData", function () {
-                console.log(url, "Stream codecData.")
+            .on('codecData', function () {
+                console.log(url, '转码中......');
             })
-            .on("error", function (err, a, b) {
-                console.log(url, "An error occured: ", err.message);
-                console.log(a)
-                console.log(b)
+            .on('error', function (err, a, b) {
+                console.log(url, '转码 错误: ', err.message);
+                console.log(a);
+                console.log(b);
             })
-            .on("end", function () {
-                console.log(url, "Stream end!");
+            .on('end', function () {
+                console.log(url, '转码 结束!');
             })
-            .outputFormat("flv").videoCodec("copy").noAudio().pipe(stream);
+            .outputFormat('flv').videoCodec('copy').noAudio().pipe(stream);
     } catch (error) {
-        console.log(error);
+        console.log('抛出异常', error);
     }
 }
 
