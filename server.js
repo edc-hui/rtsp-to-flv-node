@@ -38,7 +38,7 @@ function rtspToFlvHandle(ws, req) {
         browserBufferTimeout: 1000000
     });
     // const url = req.query.url;
-    const url = new Buffer(url, 'base64').toString();
+    const url = new Buffer(req.query.url, 'base64').toString();
     console.log('rtsp url:', url);
     try {
         ffmpeg(url)
