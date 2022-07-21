@@ -43,9 +43,8 @@ function rtspToFlvHandle(ws, req) {
     try {
         ffmpeg(url)
             .addInputOption(
-                '-re',
                 '-rtsp_transport', 'tcp',
-                '-buffer_size', '4096000'
+                '-buffer_size', '102400'
             )
             .on('start', (commandLine) => {
                 console.log(commandLine, '转码 开始');
