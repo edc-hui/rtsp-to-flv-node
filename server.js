@@ -42,7 +42,7 @@ function rtspToFlvHandle(ws, req) {
     console.log('rtsp url:', url);
     try {
         ffmpeg(url)
-            .addInputOption('-rtsp_transport', 'tcp', '-buffer_size', '102400')
+            .addInputOption('-re', '-rtsp_transport', 'tcp')
             .on('start', () => {
                 console.log(url, '转码 开始');
             })
@@ -51,8 +51,8 @@ function rtspToFlvHandle(ws, req) {
             })
             .on('error', function (err, a, b) {
                 console.log(url, '转码 错误: ', err.message);
-                console.log(a);
-                console.log(b);
+                console.log('error1------>', a);
+                console.log('error2------>', b);
             })
             .on('end', function () {
                 console.log(url, '转码 结束!');
