@@ -57,7 +57,11 @@ function rtspToFlvHandle(ws, req) {
             .on('end', function () {
                 console.log(url, '转码 结束!');
             })
-            .outputFormat('flv').videoCodec('copy').noAudio().pipe(stream);
+            .videoCodec('libx264')
+            .withSize('320x?')
+            .outputFormat('flv')
+            .noAudio()
+            .pipe(stream);
     } catch (error) {
         console.log('抛出异常', error);
     }
