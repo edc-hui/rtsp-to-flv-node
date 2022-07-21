@@ -47,11 +47,14 @@ function rtspToFlvHandle(ws, req) {
                 '-rtsp_transport', 'tcp',
                 '-buffer_size', '4096000'
             )
-            .on('start', () => {
-                console.log(url, '转码 开始');
+            .on('start', (commandLine) => {
+                console.log(commandLine, '转码 开始');
             })
-            .on('codecData', function () {
-                console.log(url, '转码中......');
+            .on('codecData', function (data) {
+                console.log(data, '转码中......');
+            })
+            .on('progress', function (progress) {
+                console.log(progress,'转码进度')
             })
             .on('error', function (err, a, b) {
                 console.log(url, '转码 错误: ', err.message);
@@ -66,9 +69,9 @@ function rtspToFlvHandle(ws, req) {
                 '-tune', 'zerolatency',
                 '-preset', 'ultrafast'
             )
+            .outputFormat('flv')
             .videoCodec('libx264')
             .withSize('320x?')
-            .outputFormat('flv')
             .noAudio()
             .pipe(stream);
     } catch (error) {
