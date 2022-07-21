@@ -53,7 +53,7 @@ function rtspToFlvHandle(ws, req) {
                 console.log(data, '转码中......');
             })
             .on('progress', function (progress) {
-                console.log(progress,'转码进度')
+                // console.log(progress,'转码进度')
             })
             .on('error', function (err, a, b) {
                 console.log(url, '转码 错误: ', err.message);
@@ -63,11 +63,11 @@ function rtspToFlvHandle(ws, req) {
             .on('end', function () {
                 console.log(url, '转码 结束!');
             })
-            // .addOutputOption(
-            //     '-threads', '4',
-            //     '-tune', 'zerolatency',
-            //     '-preset', 'ultrafast'
-            // )
+            .addOutputOption(
+                '-threads', '4',
+                '-tune', 'zerolatency',
+                '-preset', 'ultrafast'
+            )
             .outputFormat('flv')
             .videoCodec('libx264')
             .withSize('320x240')
