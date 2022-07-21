@@ -63,14 +63,14 @@ function rtspToFlvHandle(ws, req) {
             .on('end', function () {
                 console.log(url, '转码 结束!');
             })
-            .addOutputOption(
-                '-threads', '4',
-                '-tune', 'zerolatency',
-                '-preset', 'ultrafast'
-            )
+            // .addOutputOption(
+            //     '-threads', '4',
+            //     '-tune', 'zerolatency',
+            //     '-preset', 'ultrafast'
+            // )
             .outputFormat('flv')
             .videoCodec('libx264')
-            .withSize('320x?')
+            .withSize('320x240')
             .noAudio()
             .pipe(stream);
     } catch (error) {
